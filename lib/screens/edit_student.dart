@@ -27,7 +27,6 @@ class EditStudentState extends State<EditStudent> {
   final _addresscontroller = TextEditingController();
   final _mobilecontroller = TextEditingController();
 
-
   @override
  void initState() {
   print('id=${widget.student.id}');
@@ -37,17 +36,18 @@ class EditStudentState extends State<EditStudent> {
    _mobilecontroller.text = widget.student.mobile;
     super.initState();
   }
+  @override
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Edit Student Details'),
-        backgroundColor: Colors.deepPurpleAccent,
+        title: const Text('Edit Student Details',style: TextStyle(fontWeight: FontWeight.bold),),
+        backgroundColor:Colors.green.shade900,
       ),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(25),
+          padding: const EdgeInsets.all(25),
           child: Column(
             children: [
               Form(
@@ -68,14 +68,14 @@ class EditStudentState extends State<EditStudent> {
                             right: 0,
                             child: CircleAvatar(
                               radius: 18,
-                              backgroundColor: Colors.white,
+                              backgroundColor: Colors.lightGreen,
                               child: IconButton(
                                   onPressed: () {
                                     fromgallery();
                                   },
                                   icon: const Icon(
                                     Icons.add_a_photo_outlined,
-                                    color: Colors.deepPurple,
+                                    color: Colors.black,
                                     size: 20,
                                   )),
                             ),
@@ -84,7 +84,7 @@ class EditStudentState extends State<EditStudent> {
                       ),
 
 
-                      SizedBox(height: 15),
+                      const SizedBox(height: 25),
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -100,7 +100,7 @@ class EditStudentState extends State<EditStudent> {
                       ),
 
 
-                      SizedBox(height: 15),
+                      const SizedBox(height: 25),
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -117,7 +117,7 @@ class EditStudentState extends State<EditStudent> {
                       ),
 
 
-                      SizedBox(height: 15),
+                      const SizedBox(height: 25),
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -133,7 +133,7 @@ class EditStudentState extends State<EditStudent> {
                       ),
 
 
-                      SizedBox(height: 15),
+                      const SizedBox(height: 25),
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -146,7 +146,7 @@ class EditStudentState extends State<EditStudent> {
                         decoration: const InputDecoration(
                           prefixText: '+91 ',
                           prefixStyle:
-                              TextStyle(color: Colors.black, fontSize: 16),
+                              TextStyle(color: Colors.white, fontSize: 16),
                           suffixIcon: Icon(Icons.phone),
                           border: OutlineInputBorder(),
                           labelText: 'Mobile',
@@ -158,13 +158,15 @@ class EditStudentState extends State<EditStudent> {
                   )
                 ),
 
-              SizedBox(height: 15),
+              const SizedBox(height: 25),
               ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(minimumSize: const Size(360, 45 ),backgroundColor: Colors.green.shade900,),
                   onPressed: () {
                     onUpdateButtonClicked(context,widget.student.id);
                   },                 
-                  icon: Icon(Icons.check),
-                  label: Text('Update')),
+                  icon: const Icon(Icons.check,color: Colors.white,),
+                  label: const Text('Update',style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.bold),)
+              ),
             ],
           ),
         ),
