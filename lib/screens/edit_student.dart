@@ -10,16 +10,13 @@ import 'package:student_app_getx/screens/add_student.dart';
 
 
 class EditStudent extends StatefulWidget {
+   EditStudent({super.key, required this.student});
 
-  final student;
+  Studentmodel student;
   
-  const EditStudent({super.key, required Studentmodel this.student});
-
   @override
   State<EditStudent> createState() => EditStudentState();
 }
-
-
 
 class EditStudentState extends State<EditStudent> {
 

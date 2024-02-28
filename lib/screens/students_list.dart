@@ -19,9 +19,9 @@ class _ListStudentState extends State<ListStudent> {
   @override
   Widget build(BuildContext context) {
     return Container(      
-      decoration:const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),color: Color.fromARGB(255, 232, 227, 227),),
+      decoration:const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),color: Colors.black),
       child: Padding(
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(10),
         child: ValueListenableBuilder(
           valueListenable: studentlistNotifier, 
           builder: (BuildContext ctx,List<Studentmodel>studentList,Widget? child){
@@ -45,7 +45,7 @@ class _ListStudentState extends State<ListStudent> {
                     Navigator.of(context).push(MaterialPageRoute(builder: (ctx){ return Details(details: data,);}));
                   },
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Color.fromARGB(255, 51, 40, 73)),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Color.fromARGB(255, 31, 45, 32)),
                     child: Padding(
                       padding: const EdgeInsets.only(top: 5),
                       child: SingleChildScrollView(

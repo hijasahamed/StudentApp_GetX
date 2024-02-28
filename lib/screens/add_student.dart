@@ -30,13 +30,13 @@ class _AddStudentState extends State<AddStudent> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Add Student Details'),
-        backgroundColor: Colors.deepPurpleAccent,
+        title: const Text('Add Student Details',style: TextStyle(fontWeight: FontWeight.bold),),
+        backgroundColor: Colors.green.shade900,
       ),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(25),
+          padding:const EdgeInsets.all(25),
           child: Column(
             children: [
               Form(
@@ -49,7 +49,7 @@ class _AddStudentState extends State<AddStudent> {
                           CircleAvatar(
                             backgroundImage:image1 != null
                             ? FileImage(image1!)
-                            :  AssetImage('images/circle avatar.png')
+                            :  const AssetImage('images/circle avatar.png')
                             as ImageProvider,
                             radius: 70,
                           ),
@@ -58,23 +58,22 @@ class _AddStudentState extends State<AddStudent> {
                             right: 0,
                             child: CircleAvatar(
                               radius: 18,
-                              backgroundColor: Colors.white,
+                              backgroundColor: Colors.lightGreen,
                               child: IconButton(
                                   onPressed: () {
                                     fromgallery();
                                   },
                                   icon: const Icon(
                                     Icons.add_a_photo_outlined,
-                                    color: Colors.deepPurple,
+                                    color: Colors.black,
                                     size: 20,
                                   )),
                             ),
                           )
                         ],
                       ),
-        
-        
-                      SizedBox(height: 25),
+                
+                      const SizedBox(height: 25),
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -90,7 +89,7 @@ class _AddStudentState extends State<AddStudent> {
                       ),
         
         
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -107,7 +106,7 @@ class _AddStudentState extends State<AddStudent> {
                       ),
        
         
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -124,7 +123,7 @@ class _AddStudentState extends State<AddStudent> {
                       ),
         
         
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty||value.length!=10) { 
@@ -149,14 +148,14 @@ class _AddStudentState extends State<AddStudent> {
                   )
                 ),
         
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
               ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(minimumSize: Size(360, 45 )),
+                style: ElevatedButton.styleFrom(minimumSize: const Size(360, 45 ),backgroundColor: Colors.green.shade900,),
                   onPressed: () {
                     onSubmitButtonClicked(context);
                   },                 
-                  icon: Icon(Icons.check),
-                  label: Text('Submit')
+                  icon: const Icon(Icons.check,color: Colors.white,),
+                  label: const Text('Submit',style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.bold),)
               ),
 
             ],
