@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:student_app_getx/db/functions/functions.dart';
 import 'package:student_app_getx/db/model/model.dart';
-import 'package:student_app_getx/screens/edit_student.dart';
-import 'package:student_app_getx/screens/personal_details.dart';
+import 'package:student_app_getx/screens/edit_student/edit_student.dart';
+import 'package:student_app_getx/screens/list_student/personal_details.dart';
 
 
 

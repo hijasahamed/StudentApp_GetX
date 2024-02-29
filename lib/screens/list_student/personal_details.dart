@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:student_app_getx/screens/edit_student.dart';
+import 'package:student_app_getx/screens/edit_student/edit_student.dart';
 
 class Details extends StatefulWidget {
-  var details;
     Details({super.key,required this.details});
+
+  final details;
 
   @override
   State<Details> createState() => _DetailsState();

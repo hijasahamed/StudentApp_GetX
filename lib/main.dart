@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:student_app_getx/db/model/model.dart';
-import 'package:student_app_getx/screens/home_screen.dart';
+import 'package:student_app_getx/screens/add_student/add_student.dart';
+import 'package:student_app_getx/screens/home_screen/home_screen.dart';
+import 'package:student_app_getx/screens/list_student/list_student.dart';
 
 
 Future<void> main() async{
@@ -19,10 +22,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home:const HomeScreen()
+      getPages: [
+        GetPage(name: '/homescreen', page: () => const HomeScreen(),),
+        GetPage(name: '/addstudent', page: () => const AddStudent(),),
+        GetPage(name: '/studentlist', page: () => const ListStudent(),),
+      ],
+      initialRoute: '/homescreen',
+      defaultTransition: Transition.leftToRightWithFade,
     );
   }
 }

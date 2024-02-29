@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:student_app_getx/db/model/model.dart';
-import 'package:student_app_getx/screens/add_student.dart';
-import 'package:student_app_getx/screens/personal_details.dart';
-import 'package:student_app_getx/screens/students_list.dart';
+import 'package:student_app_getx/screens/list_student/personal_details.dart';
+import 'package:student_app_getx/screens/list_student/list_student.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,9 +16,15 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green.shade900,
-        leading:  const Icon(Icons.menu,size: 33,),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: (){
+            
+          }, 
+          icon: const Icon(Icons.menu,size: 33,)
+        ),
         centerTitle: true,
-        title: const Text('Student Register',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+        title: const Text('STUDENT REGISTER',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
         actions: [
           IconButton(
             onPressed: (){
@@ -28,35 +34,34 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: size.height*.77,
-            width: size.width,
-            child: const Padding(
-              padding: EdgeInsets.all(5),
-              child: ListStudent(),
-            ),
-          ),
-          Flexible(
-            child: SizedBox(
-              child: Center(
-                child: ElevatedButton(
-                  style:  ButtonStyle(                    
-                    backgroundColor: MaterialStatePropertyAll(Colors.green.shade900,)
-                  ),
-                  onPressed: (){
-                    Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (ctx) {
-                          return const AddStudent();
-                        }));
-                  }, 
-                  child:const Text('Add Student',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),)
-                ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(
+              height: size.height*.77,
+              width: size.width,
+              child: const Padding(
+                padding: EdgeInsets.all(5),
+                child: ListStudent(),
               ),
             ),
-          )
-        ],
+            Flexible(
+              child: SizedBox(
+                child: Center(
+                  child: ElevatedButton(
+                    style:  ButtonStyle(                    
+                      backgroundColor: MaterialStatePropertyAll(Colors.green.shade900,)
+                    ),
+                    onPressed: (){
+                      Get.toNamed('/addstudent');
+                    }, 
+                    child:const Text('Add Student',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),)
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

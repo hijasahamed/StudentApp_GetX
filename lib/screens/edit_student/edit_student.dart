@@ -5,10 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:student_app_getx/db/functions/functions.dart';
 import 'package:student_app_getx/db/model/model.dart';
-import 'package:student_app_getx/screens/add_student.dart';
+import 'package:student_app_getx/screens/add_student/add_student.dart';
 
 
 
+// ignore: must_be_immutable
 class EditStudent extends StatefulWidget {
    EditStudent({super.key, required this.student});
 
