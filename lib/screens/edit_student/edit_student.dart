@@ -58,12 +58,12 @@ class EditStudentState extends State<EditStudent> {
 
                       Stack(
                         children: [
-                          CircleAvatar(
-                            backgroundImage:image1 != null
-                            ? FileImage(image1!)
-                            : FileImage(File(widget.student.image)),
-                            radius: 60,
-                          ),
+                          // CircleAvatar(
+                          //   backgroundImage:image1 != null
+                          //   ? FileImage(image1!)
+                          //   : FileImage(File(widget.student.image)),
+                          //   radius: 60,
+                          // ),
                           Positioned(
                             bottom: 0,
                             right: 0,
@@ -72,7 +72,7 @@ class EditStudentState extends State<EditStudent> {
                               backgroundColor: Colors.lightGreen,
                               child: IconButton(
                                   onPressed: () {
-                                    fromgallery();
+                                    
                                   },
                                   icon: const Icon(
                                     Icons.add_a_photo_outlined,
@@ -163,7 +163,7 @@ class EditStudentState extends State<EditStudent> {
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(minimumSize: const Size(360, 45 ),backgroundColor: Colors.green.shade900,),
                   onPressed: () {
-                    onUpdateButtonClicked(context,widget.student.id);
+                    
                   },                 
                   icon: const Icon(Icons.check,color: Colors.white,),
                   label: const Text('Update',style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.bold),)
@@ -175,57 +175,9 @@ class EditStudentState extends State<EditStudent> {
     );
   }
 
-   Future<void> onUpdateButtonClicked(BuildContext context,id) async{
-    final name=_namecontroller.text.trim();
-    final age=_agecontroller.text.trim();
-    final address=_addresscontroller.text.trim();
-    final mobile=_mobilecontroller.text.trim();
-   
+  
 
-    if(_validation.currentState!.validate() ){
-      final student=Studentmodel(name: name, age: age, address: address, mobile: mobile, image: image!,id: id);
-      await updateStudent(id,student);
-      Navigator.of(context).pop();
-      updatedsuccessfully();
-      clearStudentProfile();  
-    }
-  }
-
-  Future<void> fromgallery() async {
-    final img1 = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (img1 != null) {
-      setState(() {
-        image1 = File(img1.path);
-        image = image1!.path;
-      });
-    }
-  }
-
-  clearStudentProfile() {
-    _namecontroller.text = '';
-    _agecontroller.text = '';
-    _addresscontroller.text = '';
-    _mobilecontroller.text = '';
-    setState(() {
-      image1 = null;
-    });
-  }
-
-  updatedsuccessfully(){
-    ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          duration: Duration(seconds: 2),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor:  Colors.blue,
-          margin:  EdgeInsets.all(75),
-          content: Text(
-            'Updated',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
-      );
-  }
+  
 
 }
 

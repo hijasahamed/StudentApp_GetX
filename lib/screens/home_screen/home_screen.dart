@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:student_app_getx/db/model/model.dart';
+import 'package:student_app_getx/screens/add_student/add_student.dart';
 import 'package:student_app_getx/screens/list_student/personal_details.dart';
 import 'package:student_app_getx/screens/list_student/list_student.dart';
 
@@ -47,16 +48,14 @@ class HomeScreen extends StatelessWidget {
             ),
             Flexible(
               child: SizedBox(
-                child: Center(
-                  child: ElevatedButton(
-                    style:  ButtonStyle(                    
-                      backgroundColor: MaterialStatePropertyAll(Colors.green.shade900,)
-                    ),
-                    onPressed: (){
-                      Get.toNamed('/addstudent');
-                    }, 
-                    child:const Text('Add Student',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),)
+                child: ElevatedButton(
+                  style:  ButtonStyle(                    
+                    backgroundColor: MaterialStatePropertyAll(Colors.green.shade900,)
                   ),
+                  onPressed: (){
+                    Get.to(() => AddStudent());                   
+                  }, 
+                  child:const Text('Add Student',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),)
                 ),
               ),
             )
