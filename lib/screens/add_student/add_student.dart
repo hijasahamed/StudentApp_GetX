@@ -30,7 +30,8 @@ class AddStudent extends StatelessWidget {
         addresscontroller: addresscontroller, 
         mobilecontroller: mobilecontroller, 
         size: size, 
-        imagecontroller: imagecontroller, 
+        imagecontroller: imagecontroller,
+        fromedit: false, 
       ),
     );
   }

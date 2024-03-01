@@ -8,9 +8,8 @@ import 'package:student_app_getx/screens/home_screen/home_screen.dart';
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  if(!Hive.isAdapterRegistered(StudentmodelAdapter().typeId)){
-    Hive.registerAdapter(StudentmodelAdapter());
-  }
+  Hive.registerAdapter(StudentmodelAdapter());
+  await Hive.openBox<Studentmodel>('student_db');
   runApp(const MyApp());
 }
 

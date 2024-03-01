@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:student_app_getx/db/functions/functions.dart';
 import 'package:student_app_getx/db/functions/image_picker.dart';
+import 'package:student_app_getx/db/model/model.dart';
 
 // ignore: must_be_immutable
 class TextFormFieldWidget extends StatelessWidget {
-  TextFormFieldWidget({
+   TextFormFieldWidget({
     super.key,
     required this.formkey,
     required this.namecontroller,
@@ -14,15 +16,18 @@ class TextFormFieldWidget extends StatelessWidget {
     required this.mobilecontroller,
     required this.size,
     required this.imagecontroller,
+    required this.fromedit,
   });
 
-  GlobalKey formkey;
-  TextEditingController namecontroller;
-  TextEditingController agecontroller;
-  TextEditingController addresscontroller;
-  TextEditingController mobilecontroller;
-  Size size;
-  Imagecontroller imagecontroller;
+  final GlobalKey formkey;
+  final TextEditingController namecontroller;
+  final TextEditingController agecontroller;
+  final TextEditingController addresscontroller;
+  final TextEditingController mobilecontroller;
+  final Size size;
+  final Imagecontroller imagecontroller;
+  final bool fromedit;
+  final HomeController homeController= Get.put(HomeController()); 
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +51,8 @@ class TextFormFieldWidget extends StatelessWidget {
                                 height: 120,
                                 width: 120,
                                 decoration: const BoxDecoration(
+                                  color: Colors.black,
                                   shape: BoxShape.circle,
-                                  color: Colors.black
                                 ),
                                 child: imagecontroller.selectedImage.value != null
                                 ? ClipOval(
@@ -60,13 +65,13 @@ class TextFormFieldWidget extends StatelessWidget {
                               );
                             }),
                             Positioned(
-                              bottom: -10,
-                              right: -12,
+                              bottom: -12,
+                              right: -11,
                               child: IconButton(
                                 onPressed: (){
                                   pickimages(imagecontroller);
                                 }, 
-                                icon: const Icon(Icons.add_a_photo_outlined)
+                                icon: Icon(Icons.add_a_photo_outlined,color: Colors.green.shade900,)
                               ),
                             )
                           ],
@@ -132,7 +137,7 @@ class TextFormFieldWidget extends StatelessWidget {
                           decoration: const InputDecoration(
                             prefixText: '+91 ',
                             prefixStyle:
-                                TextStyle(color: Colors.black, fontSize: 16),
+                                TextStyle(color: Colors.white, fontSize: 16),
                             suffixIcon: Icon(Icons.phone),
                             border: OutlineInputBorder(),
                             labelText: 'Mobile',
@@ -147,7 +152,7 @@ class TextFormFieldWidget extends StatelessWidget {
                       backgroundColor: Colors.green.shade900,
                     ),
                     onPressed: () {
-                     
+                      onsubmit(namecontroller, agecontroller, addresscontroller, mobilecontroller, imagecontroller, formkey);
                     },
                     icon: const Icon(
                       Icons.check,
@@ -167,5 +172,41 @@ class TextFormFieldWidget extends StatelessWidget {
       )),
     );
   }
+
+ Future<void> onsubmit(namecontroller,agecontroller,addresscontroller,mobilecontroller,imagecontroller,formkey)async{
+  final name=namecontroller.text.trim();
+  final age=agecontroller.text.trim();
+  final address=addresscontroller.text.trim();
+  final mobile=mobilecontroller.text.trim();
+  if(formkey.currentState!.validate()&&imagecontroller.selectedImage.value==null){
+    Get.snackbar('Error', 'Please select a photo',
+    backgroundColor: Colors.red,
+    colorText: Colors.white,
+    snackPosition: SnackPosition.BOTTOM,
+    overlayBlur: 1,
+    duration: const Duration(seconds: 2),
+    dismissDirection: DismissDirection.horizontal
+    );   
+  }
+  else if(formkey.currentState!.validate() && imagecontroller.selectedImage.value !=null){
+    final values=Studentmodel(name: name, age: age, address: address, mobile: mobile, image: imagecontroller.selectedImage.value!.path);
+    homeController.addStudentToDb(values);
+    Get.back();
+  }
+  else if(imagecontroller.selectedImage.value==null && !formkey.currentState!.validate()){
+    Get.snackbar(
+      'error',
+      'Please complete the form before submission',
+      backgroundColor: Colors.red,
+      overlayBlur: 1,
+      duration: const Duration(seconds: 2),
+      snackPosition: SnackPosition.BOTTOM,
+      dismissDirection: DismissDirection.horizontal
+    );
+  }
+ }
+
 }
+
+
 

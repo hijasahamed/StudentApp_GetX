@@ -1,40 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:student_app_getx/db/functions/image_picker.dart';
 import 'package:student_app_getx/db/model/model.dart';
 
-ValueNotifier<List<Studentmodel>> studentlistNotifier = ValueNotifier([]);
+class HomeController extends GetxController {
+  late final Box<Studentmodel> studentBox;
+  final RxList<Studentmodel> students = <Studentmodel>[].obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    studentBox = Hive.box<Studentmodel>('student_db');
+  }
 
+  Future<void> addStudentToDb(Studentmodel value) async {
+    final studentDB = await Hive.openBox<Studentmodel>('student_db');
+    await studentDB.add(value);
+    Get.snackbar('Success', 'Student detials saved Successfully',
+        backgroundColor: Colors.green,
+        overlayBlur: 1,
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 2),
+        dismissDirection: DismissDirection.horizontal);
+  }
 
-Future<void> addStudent(Studentmodel value) async{
-  final studentDB= await Hive.openBox<Studentmodel>('student_db');
-  final id1= await studentDB.add(value);
-  value.id=id1;
-  studentDB.put(id1, value);
-  getAllStudents();
+  void getStudents() {
+    students.assignAll(studentBox.values.toList());
+    studentBox.watch().listen((event) {
+      students.assignAll(studentBox.values.toList());
+    });
+  }
+
+  // void deleteStudent(Studentmodel value){
+  //   studentBox.delete(value.key);
+  //   students.remove(value);
+  // }
 
 }
-
-Future<void> getAllStudents() async{
-  final studentDB= await Hive.openBox<Studentmodel>('student_db');
-  studentlistNotifier.value.clear();
-  studentlistNotifier.value.addAll(studentDB.values);
-  studentlistNotifier.notifyListeners();
-}
-
-Future<void> deleteStudent(int id) async{
-  final studentDB= await Hive.openBox<Studentmodel>('student_db');
-  await studentDB.delete(id);
-  getAllStudents();
-}
-
-Future<void> updateStudent(int id,Studentmodel value) async{
-  final studentDB= await Hive.openBox<Studentmodel>('student_db');
-  await studentDB.put(id, value);
-  getAllStudents(); 
-}
-
-
-

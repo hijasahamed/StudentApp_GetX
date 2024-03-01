@@ -1,36 +1,95 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:student_app_getx/db/functions/functions.dart';
-import 'package:student_app_getx/db/model/model.dart';
-import 'package:student_app_getx/screens/edit_student/edit_student.dart';
-import 'package:student_app_getx/screens/list_student/personal_details.dart';
 
+class ListStudent extends StatelessWidget {
+  ListStudent({super.key});
 
+  final HomeController homeController = Get.put(HomeController()); 
 
-class ListStudent extends StatefulWidget {
-  const ListStudent({super.key});
-
-  @override
-  State<ListStudent> createState() => _ListStudentState();
-}
-
-class _ListStudentState extends State<ListStudent> {
   @override
   Widget build(BuildContext context) {
-    return Container(      
-      decoration:const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)),color: Colors.black),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ValueListenableBuilder(
-          valueListenable: studentlistNotifier, 
-          builder: (BuildContext ctx,List<Studentmodel>studentList,Widget? child){
-            if(studentList.isEmpty){ 
-              return const Center( 
-                child: Text('No Student Data Availabe',style: TextStyle(color: Colors.black),),
-              );
-            }
-            return GridView.builder( 
+    return Obx(() {
+      if(homeController.students.isEmpty){
+        return const Center(
+          child: Text('No Result'),
+        );
+      }
+      else{
+        return GridView.builder(
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+          ),
+          itemCount: homeController.students.length,
+          itemBuilder: (context,index){
+            final student = homeController.students[index];
+            return GestureDetector(
+              onTap: () {
+                
+              },
+              child: Container(
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Color.fromARGB(255, 31, 45, 32)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 30,
+                                      backgroundImage: FileImage(File(student.image)),
+                                    ),
+                                    IconButton(onPressed: (){
+                                    //  Navigator.of(context).push(MaterialPageRoute(builder: (context){return EditStudent(student: data,);}));
+                                    }, 
+                                    icon: Icon(Icons.edit,color: Colors.green,)
+                                    ),
+                                    // IconButton(onPressed: (){deletebuttonclicked(data.id);}, icon: Icon(Icons.delete,color: Colors.red,)) 
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Name:${student.name}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
+                                    Text('Age:${student.age}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
+                                    Text('Address:${student.address}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
+                                    Text('Mobile:+91 ${student.mobile}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),  
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+            );
+          }
+        );
+      }
+    });
+  }
+}
+
+
+
+/*
+ GridView.builder( 
               itemCount: studentList.length,
               gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -92,51 +151,4 @@ class _ListStudentState extends State<ListStudent> {
                   ),
                 );
               }
-            );
-          }
-        ),
-      ),
-    );
-  }
-
-
-  Future<void> deletebuttonclicked(id) async{ 
-    showDialog(
-      context: context, 
-      builder: (ctx){
-        return AlertDialog(
-          content:const Text('Do You Want To Delete Details?'),
-          actions: [
-            TextButton(
-              onPressed: (){
-                deleteStudent(id);
-                Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    duration: Duration(seconds: 2),
-                    behavior: SnackBarBehavior.floating,
-                    backgroundColor:  Color.fromARGB(255, 219, 14, 14),
-                    margin: EdgeInsets.all(75),
-                    content: Text(
-                      'Student Details Deleted',
-                      textAlign: TextAlign.center,
- 
-                    ),
-                  ),
-                );                
-              }, 
-              child:const Text('YES'),
-            ),
-            TextButton(
-              onPressed: (){
-                Navigator.of(context).pop();
-              }, 
-              child:const Text('NO')
-            )
-          ],
-        );
-      }
-    );
-  }
-
-}
+            ); */
