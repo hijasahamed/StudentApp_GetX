@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:student_app_getx/db/functions/home_controller.dart';
 import 'package:student_app_getx/screens/add_student/add_student.dart';
 import 'package:student_app_getx/screens/list_student/list_student.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
-
-  
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

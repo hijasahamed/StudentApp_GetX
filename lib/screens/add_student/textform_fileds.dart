@@ -110,6 +110,7 @@ class TextFormFieldWidget extends StatelessWidget {
                             if (value!.isEmpty) {
                               return 'Please eneter the age';
                             }
+                            return null;
                           },
                           controller: agecontroller,
                           keyboardType: TextInputType.number,
@@ -128,6 +129,7 @@ class TextFormFieldWidget extends StatelessWidget {
                             if (value!.isEmpty) {
                               return 'Please eneter the Place';
                             }
+                            return null;
                           },
                           controller: addresscontroller,
                           decoration: const InputDecoration(
@@ -143,6 +145,7 @@ class TextFormFieldWidget extends StatelessWidget {
                             if (value!.isEmpty || value.length != 10) {
                               return 'Please eneter a valid phone number';
                             }
+                            return null;
                           },
                           controller: mobilecontroller,
                           inputFormatters: [

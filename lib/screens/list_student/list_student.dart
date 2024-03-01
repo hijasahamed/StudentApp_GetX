@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:student_app_getx/db/functions/home_controller.dart';
 import 'package:student_app_getx/db/model/model.dart';
+import 'package:student_app_getx/screens/list_student/personal_details.dart';
 
 class ListStudent extends StatelessWidget {
   ListStudent({super.key,});
@@ -37,7 +38,7 @@ class ListStudent extends StatelessWidget {
                 final student = homeController.students[index];
                 return GestureDetector(
                   onTap: () {
-                    
+                    Get.to(Details(student: student,));
                   },
                   child: Container(
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Color.fromARGB(255, 31, 45, 32)),

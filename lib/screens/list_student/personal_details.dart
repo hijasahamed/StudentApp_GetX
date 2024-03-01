@@ -1,30 +1,24 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:student_app_getx/screens/edit_student/edit_student.dart';
+import 'package:student_app_getx/db/model/model.dart';
 
-class Details extends StatefulWidget {
-    Details({super.key,required this.details});
+class Details extends StatelessWidget {
+  const Details({super.key,required this.student});
 
-  final details;
-
-  @override
-  State<Details> createState() => _DetailsState();
-}
-
-class _DetailsState extends State<Details> {
+  final Studentmodel student;
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(widget.details.name,style: TextStyle(fontWeight: FontWeight.w600),),
+        title: Text(student.name,style: const TextStyle(fontWeight: FontWeight.w600),),
         backgroundColor: Colors.deepPurpleAccent,        
       ),
       body: SafeArea(
         child: Padding(
-          padding:  EdgeInsets.all(8.0),
-          child: Container(
+          padding:  const EdgeInsets.all(8.0),
+          child: SizedBox(
             height: double.infinity,
             width: double.infinity,
             child:  Column(
@@ -42,10 +36,10 @@ class _DetailsState extends State<Details> {
                              children: [
                                 CircleAvatar(
                                   radius: 80,
-                                  backgroundImage: FileImage(File(widget.details.image)), 
+                                  backgroundImage: FileImage(File(student.image)), 
                                 ),
                                 IconButton(onPressed: (){
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context){return EditStudent(student: widget.details,);}));                           
+                                                              
                                   }, icon: const Icon(Icons.edit,color: Colors.green,)
                                 )
                              ],
@@ -55,10 +49,10 @@ class _DetailsState extends State<Details> {
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('NAME:${widget.details.name}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
-                              Text('AGE:${widget.details.age}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
-                              Text('ADDRESS:${widget.details.address}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
-                              Text('MOBILE:${widget.details.mobile}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                              Text('NAME:${student.name}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                              Text('AGE:${student.age}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                              Text('ADDRESS:${student.address}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                              Text('MOBILE:${student.mobile}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
                             ],
                           ),
                         )
