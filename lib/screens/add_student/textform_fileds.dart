@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:student_app_getx/db/functions/functions.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:student_app_getx/db/functions/home_controller.dart';
 import 'package:student_app_getx/db/functions/image_picker.dart';
 import 'package:student_app_getx/db/model/model.dart';
 
 // ignore: must_be_immutable
 class TextFormFieldWidget extends StatelessWidget {
-   TextFormFieldWidget({
+  TextFormFieldWidget({
     super.key,
     required this.formkey,
     required this.namecontroller,
@@ -27,7 +30,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final Size size;
   final Imagecontroller imagecontroller;
   final bool fromedit;
-  final HomeController homeController= Get.put(HomeController()); 
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -46,33 +49,41 @@ class TextFormFieldWidget extends StatelessWidget {
                       children: [
                         Stack(
                           children: [
-                            Obx((){
+                            Obx(() {
                               return Container(
-                                height: 120,
-                                width: 120,
-                                decoration: const BoxDecoration(
-                                  color: Colors.black,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: imagecontroller.selectedImage.value != null
-                                ? ClipOval(
-                                  child: Image.file(imagecontroller.selectedImage.value!,fit: BoxFit.cover,),
-                                )
-                                : const CircleAvatar(
-                                  radius: 30,
-                                  backgroundImage: AssetImage('images/circle avatar.png') as ImageProvider,
-                                )
-                              );
+                                  height: 120,
+                                  width: 120,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: imagecontroller.selectedImage.value !=
+                                          null
+                                      ? ClipOval(
+                                          child: Image.file(
+                                            imagecontroller
+                                                .selectedImage.value!,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )
+                                      : const CircleAvatar(
+                                          radius: 30,
+                                          backgroundImage: AssetImage(
+                                                  'images/circle avatar.png')
+                                              as ImageProvider,
+                                        ));
                             }),
                             Positioned(
                               bottom: -12,
                               right: -11,
                               child: IconButton(
-                                onPressed: (){
-                                  pickimages(imagecontroller);
-                                }, 
-                                icon: Icon(Icons.add_a_photo_outlined,color: Colors.green.shade900,)
-                              ),
+                                  onPressed: () {
+                                    pickimages(imagecontroller);
+                                  },
+                                  icon: Icon(
+                                    Icons.add_a_photo_outlined,
+                                    color: Colors.green.shade900,
+                                  )),
                             )
                           ],
                         ),
@@ -102,7 +113,9 @@ class TextFormFieldWidget extends StatelessWidget {
                           },
                           controller: agecontroller,
                           keyboardType: TextInputType.number,
-                          inputFormatters: [LengthLimitingTextInputFormatter(2)],
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(2)
+                          ],
                           decoration: const InputDecoration(
                               suffixIcon: Icon(Icons.calendar_month),
                               border: OutlineInputBorder(),
@@ -132,7 +145,9 @@ class TextFormFieldWidget extends StatelessWidget {
                             }
                           },
                           controller: mobilecontroller,
-                          inputFormatters: [LengthLimitingTextInputFormatter(10)],
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(10)
+                          ],
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             prefixText: '+91 ',
@@ -152,7 +167,8 @@ class TextFormFieldWidget extends StatelessWidget {
                       backgroundColor: Colors.green.shade900,
                     ),
                     onPressed: () {
-                      onsubmit(namecontroller, agecontroller, addresscontroller, mobilecontroller, imagecontroller, formkey);
+                      onsubmit(namecontroller, agecontroller, addresscontroller,
+                          mobilecontroller, imagecontroller, formkey);
                     },
                     icon: const Icon(
                       Icons.check,
@@ -173,40 +189,45 @@ class TextFormFieldWidget extends StatelessWidget {
     );
   }
 
- Future<void> onsubmit(namecontroller,agecontroller,addresscontroller,mobilecontroller,imagecontroller,formkey)async{
-  final name=namecontroller.text.trim();
-  final age=agecontroller.text.trim();
-  final address=addresscontroller.text.trim();
-  final mobile=mobilecontroller.text.trim();
-  if(formkey.currentState!.validate()&&imagecontroller.selectedImage.value==null){
-    Get.snackbar('Error', 'Please select a photo',
-    backgroundColor: Colors.red,
-    colorText: Colors.white,
-    snackPosition: SnackPosition.BOTTOM,
-    overlayBlur: 1,
-    duration: const Duration(seconds: 2),
-    dismissDirection: DismissDirection.horizontal
-    );   
+  Future<void> onsubmit(namecontroller, agecontroller, addresscontroller,
+      mobilecontroller, imagecontroller, formkey) async {
+    if (formkey.currentState!.validate() &&
+        imagecontroller.selectedImage.value == null) {
+      Get.snackbar('Error', 'Please select a photo',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+          overlayBlur: 1,
+          duration: const Duration(seconds: 2),
+          dismissDirection: DismissDirection.horizontal);
+    } else if (formkey.currentState!.validate() &&
+        imagecontroller.selectedImage.value != null) {
+      Studentmodel value = Studentmodel()
+        ..name = namecontroller.text.trim()
+        ..age = agecontroller.text.trim()
+        ..address = addresscontroller.text.trim()
+        ..mobile = mobilecontroller.text.trim()
+        ..image = imagecontroller.selectedImage.value!.path;
+      addStudentToDb(value);
+      Get.back();
+    } else if (imagecontroller.selectedImage.value == null &&
+        !formkey.currentState!.validate()) {
+      Get.snackbar('error', 'Please complete the form before submission',
+          backgroundColor: Colors.red,
+          overlayBlur: 1,
+          duration: const Duration(seconds: 2),
+          snackPosition: SnackPosition.BOTTOM,
+          dismissDirection: DismissDirection.horizontal);
+    }
   }
-  else if(formkey.currentState!.validate() && imagecontroller.selectedImage.value !=null){
-    final values=Studentmodel(name: name, age: age, address: address, mobile: mobile, image: imagecontroller.selectedImage.value!.path);
-    homeController.addStudentToDb(values);
-    Get.back();
-  }
-  else if(imagecontroller.selectedImage.value==null && !formkey.currentState!.validate()){
-    Get.snackbar(
-      'error',
-      'Please complete the form before submission',
-      backgroundColor: Colors.red,
-      overlayBlur: 1,
-      duration: const Duration(seconds: 2),
-      snackPosition: SnackPosition.BOTTOM,
-      dismissDirection: DismissDirection.horizontal
-    );
-  }
- }
 
+  Future<void> addStudentToDb(Studentmodel value) async {
+    final studentDB = Hive.box<Studentmodel>('student_db');
+    await studentDB.add(value);
+    Get.snackbar('Success', 'Student detials saved Successfully',
+        backgroundColor: Colors.green,
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 2),
+        dismissDirection: DismissDirection.horizontal);
+  }
 }
-
-
-

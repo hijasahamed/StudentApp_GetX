@@ -1,15 +1,13 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:student_app_getx/db/model/model.dart';
+import 'package:student_app_getx/db/functions/home_controller.dart';
 import 'package:student_app_getx/screens/add_student/add_student.dart';
-import 'package:student_app_getx/screens/list_student/personal_details.dart';
 import 'package:student_app_getx/screens/list_student/list_student.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +27,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: (){
-              showSearch(context: context, delegate: Search()); 
+              
             }, 
             icon:const Icon(Icons.search,size: 33)
           )
@@ -42,7 +40,7 @@ class HomeScreen extends StatelessWidget {
               height: size.height*.77,
               width: size.width,
               child:  Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: ListStudent()
               ),
             ),
@@ -63,156 +61,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-
-class Search extends SearchDelegate {
-  List data = [];
-
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [
-      IconButton(
-          onPressed: () {
-            query = '';
-          },
-          icon: const Icon(Icons.clear_rounded))
-    ];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-        onPressed: () {
-          close(context, null);
-        },
-        icon: const Icon(Icons.arrow_back));
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return FutureBuilder<Box<Studentmodel>>(
-        future: Hive.openBox<Studentmodel>('student_db'),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final stdbox = snapshot.data!.values.toList();
-            final filteredData =stdbox
-                .where((data) =>
-                    data.name.toLowerCase().contains(query.toLowerCase()))
-                .toList();
-            if (query.isEmpty) {
-              return const SizedBox();
-            }
-            else if(filteredData.isEmpty){
-              return const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(child: Text('No Result',style: TextStyle(fontWeight: FontWeight.w500),)),
-              ],
-              );  
-            }
-            return ListView.builder(
-              itemBuilder: (ctx, index) {
-                final data = filteredData[index];
-                String namevalue = data.name;
-                if (namevalue.toLowerCase().contains(query.toLowerCase())) {
-                  return Column(
-                    children: [
-                      ListTile(
-                        onTap: () {                       
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (ctx) => Details(details: data) 
-                          ));
-                        },
-                        leading: CircleAvatar(
-                          radius: 80,
-                          backgroundImage: FileImage(File(data.image)),
-                        ),
-                        title: Text(
-                          data.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        
-                      ),
-                      const SizedBox(height: 12,),
-                    ],
-                  );
-                } 
-                else {
-                  return const SizedBox();
-                }
-              },
-              itemCount: filteredData.length,
-            );
-          } 
-          else {
-            return const SizedBox();
-          }
-        });
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-     return FutureBuilder<Box<Studentmodel>>(
-        future: Hive.openBox<Studentmodel>('student_db'),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final stdbox = snapshot.data!.values.toList();
-            final filteredData =stdbox
-                .where((data) =>
-                    data.name.toLowerCase().contains(query.toLowerCase()))
-                .toList();
-            if (query.isEmpty) {
-              return const SizedBox();
-            }
-            else if(filteredData.isEmpty){
-              return const  Column(
-                mainAxisAlignment: MainAxisAlignment.center ,
-              children: [
-                Center(child: Text('Sorry Searched Result Not Found',style: TextStyle(fontWeight: FontWeight.w500),)),
-              ],
-              );  
-            }
-            return ListView.builder(
-              itemBuilder: (ctx, index) {
-                final data = filteredData[index];
-                String namevalue = data.name;
-                if (namevalue.toLowerCase().contains(query.toLowerCase())) {
-                  return Column(
-                    children: [                      
-                      ListTile(
-                        onTap: () {                       
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (ctx) => Details(details: data) 
-                          ));
-                        },
-                        leading: CircleAvatar(
-                          radius: 80,
-                          backgroundImage: FileImage(File(data.image)),
-                        ),
-                        title: Text(
-                          data.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        
-                      ),
-                      const SizedBox(height: 12,),
-                    ],
-                  );
-                } 
-                else {
-                  return const SizedBox();
-                }
-              },
-              itemCount: filteredData.length,
-            );
-          } 
-          else {
-            return const SizedBox();
-          }
-        });
   }
 }

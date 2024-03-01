@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:student_app_getx/db/functions/functions.dart';
+import 'package:student_app_getx/db/functions/home_controller.dart';
 import 'package:student_app_getx/db/model/model.dart';
 import 'package:student_app_getx/screens/add_student/add_student.dart';
 
@@ -29,8 +29,7 @@ class EditStudentState extends State<EditStudent> {
   final _mobilecontroller = TextEditingController();
 
   @override
- void initState() {
-  print('id=${widget.student.id}');
+ void initState() {    
    _namecontroller.text = widget.student.name;
    _agecontroller.text = widget.student.age;
    _addresscontroller.text = widget.student.address;
