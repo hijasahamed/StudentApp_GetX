@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:student_app_getx/db/functions/image_picker.dart';
 
 // ignore: must_be_immutable
@@ -40,7 +41,34 @@ class TextFormFieldWidget extends StatelessWidget {
                       children: [
                         Stack(
                           children: [
-                            
+                            Obx((){
+                              return Container(
+                                height: 120,
+                                width: 120,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.black
+                                ),
+                                child: imagecontroller.selectedImage.value != null
+                                ? ClipOval(
+                                  child: Image.file(imagecontroller.selectedImage.value!,fit: BoxFit.cover,),
+                                )
+                                : const CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: AssetImage('images/circle avatar.png') as ImageProvider,
+                                )
+                              );
+                            }),
+                            Positioned(
+                              bottom: -10,
+                              right: -12,
+                              child: IconButton(
+                                onPressed: (){
+                                  pickimages(imagecontroller);
+                                }, 
+                                icon: const Icon(Icons.add_a_photo_outlined)
+                              ),
+                            )
                           ],
                         ),
                         const SizedBox(height: 25),
