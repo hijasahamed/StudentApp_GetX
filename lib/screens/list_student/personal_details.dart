@@ -12,8 +12,8 @@ class Details extends StatelessWidget {
     return  Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(student.name,style: const TextStyle(fontWeight: FontWeight.w600),),
-        backgroundColor: Colors.deepPurpleAccent,        
+        title: Text(student.name,style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+        backgroundColor: Colors.green.shade900,      
       ),
       body: SafeArea(
         child: Padding(
@@ -24,6 +24,7 @@ class Details extends StatelessWidget {
             child:  Column(
               children: [
                  Card(
+                  color: const Color.fromARGB(255, 31, 45, 32),
                   elevation: 10,              
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -49,10 +50,10 @@ class Details extends StatelessWidget {
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('NAME:${student.name}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
-                              Text('AGE:${student.age}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
-                              Text('ADDRESS:${student.address}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
-                              Text('MOBILE:${student.mobile}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                              Text('NAME: ${student.name}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                              Text('AGE: ${student.age}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                              Text('ADDRESS: ${student.address}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                              Text('MOBILE: ${student.mobile}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
                             ],
                           ),
                         )
