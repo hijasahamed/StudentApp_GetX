@@ -199,7 +199,6 @@ class TextFormFieldWidget extends StatelessWidget {
       Get.snackbar('Error', 'Please select a photo',
           backgroundColor: Colors.red,
           colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM,
           overlayBlur: 1,
           duration: const Duration(seconds: 2),
           dismissDirection: DismissDirection.horizontal);
@@ -219,7 +218,6 @@ class TextFormFieldWidget extends StatelessWidget {
           backgroundColor: Colors.red,
           overlayBlur: 1,
           duration: const Duration(seconds: 2),
-          snackPosition: SnackPosition.BOTTOM,
           dismissDirection: DismissDirection.horizontal);
     }
   }
@@ -229,7 +227,6 @@ class TextFormFieldWidget extends StatelessWidget {
     await studentDB.add(value);
     Get.snackbar('Success', 'Student detials saved Successfully',
         backgroundColor: Colors.green,
-        snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 2),
         dismissDirection: DismissDirection.horizontal);
   }

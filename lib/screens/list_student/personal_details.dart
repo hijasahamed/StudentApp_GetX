@@ -11,8 +11,7 @@ class Details extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(student.name,style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+        title: const Text('STUDENT  INFORMATION',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 19),),
         backgroundColor: Colors.green.shade900,      
       ),
       body: SafeArea(
@@ -23,8 +22,9 @@ class Details extends StatelessWidget {
             width: double.infinity,
             child:  Column(
               children: [
+                Text(student.name.toUpperCase(),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
                  Card(
-                  color: const Color.fromARGB(255, 31, 45, 32),
+                  color: const Color.fromARGB(255, 59, 88, 61),
                   elevation: 10,              
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -50,9 +50,9 @@ class Details extends StatelessWidget {
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('NAME: ${student.name}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                              Text('NAME: ${student.name.toUpperCase()}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
                               Text('AGE: ${student.age}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
-                              Text('ADDRESS: ${student.address}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                              Text('ADDRESS: ${student.address.toUpperCase()}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
                               Text('MOBILE: ${student.mobile}',style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
                             ],
                           ),

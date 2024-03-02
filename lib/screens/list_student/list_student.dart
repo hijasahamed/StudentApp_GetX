@@ -38,10 +38,10 @@ class ListStudent extends StatelessWidget {
                 final student = homeController.students[index];
                 return GestureDetector(
                   onTap: () {
-                    Get.to(Details(student: student,));
+                    Get.to(Details(student: student,),transition: Transition.zoom);
                   },
                   child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Color.fromARGB(255, 31, 45, 32)),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Color.fromARGB(255, 59, 88, 61)),
                         child: Padding(
                           padding: const EdgeInsets.only(top: 5),
                           child: SingleChildScrollView(
@@ -77,9 +77,9 @@ class ListStudent extends StatelessWidget {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text('Name:${student.name}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
+                                        Text('Name:${student.name.toUpperCase()}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
                                         Text('Age:${student.age}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
-                                        Text('Address:${student.address}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
+                                        Text('Address:${student.address.toUpperCase()}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
                                         Text('Mobile:+91 ${student.mobile}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),  
                                       ],
                                     ),
@@ -102,7 +102,9 @@ class ListStudent extends StatelessWidget {
   void onDelete(Studentmodel student){
     Get.defaultDialog(
       title: 'Confirm Deletion',
+      titleStyle: const TextStyle(fontWeight: FontWeight.bold),
       middleText: 'Are you sure to delete this data',
+      middleTextStyle: const TextStyle(fontWeight: FontWeight.bold),
       textConfirm: 'Delete',
       textCancel: 'Cancel',
       radius: 15,
@@ -110,6 +112,13 @@ class ListStudent extends StatelessWidget {
       onConfirm: () {
         homeController.delete(student);
         Get.back();
+        Get.snackbar(
+          'Deleted',
+          'Student details removed',
+          backgroundColor: Colors.red,
+          overlayBlur: 1,
+          duration: const Duration(seconds: 2)
+        );
       },
       onCancel: () => Get.back(),
     );
