@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:student_app_getx/db/model/model.dart';
+import 'package:student_app_getx/screens/list_student/list_student.dart';
 
 class Details extends StatelessWidget {
   const Details({super.key,required this.student});
@@ -22,7 +23,7 @@ class Details extends StatelessWidget {
             width: double.infinity,
             child:  Column(
               children: [
-                Text(student.name.toUpperCase(),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
+                Text(student.name.toUpperCase(),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 25,),),
                  Card(
                   color: const Color.fromARGB(255, 59, 88, 61),
                   elevation: 10,              
@@ -31,7 +32,7 @@ class Details extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start, 
                       children: [
-                         SizedBox(
+                        SizedBox(
                            child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                              children: [
@@ -42,10 +43,15 @@ class Details extends StatelessWidget {
                                 IconButton(onPressed: (){
                                                               
                                   }, icon: const Icon(Icons.edit,color: Colors.green,)
-                                )
+                                ),
+                                IconButton(onPressed: (){
+                                    onDelete(student,true);                         
+                                  }, icon: const Icon(Icons.delete,color: Colors.red,)
+                                ),
                              ],
                            ),
-                         ),
+                        ),
+                        const SizedBox(height: 20,),
                         ListTile(
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

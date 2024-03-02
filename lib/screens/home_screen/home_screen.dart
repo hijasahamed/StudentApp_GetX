@@ -64,8 +64,8 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               height: size.height * .77,
               width: size.width,
-              child: Padding(
-                  padding: const EdgeInsets.all(5), child: ListStudent()),
+              child: const Padding(
+                  padding: EdgeInsets.all(5), child: ListStudent()),
             ),
             Flexible(
               child: SizedBox(

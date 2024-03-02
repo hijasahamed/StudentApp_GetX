@@ -4,7 +4,9 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:student_app_getx/db/model/model.dart';
 
 class HomeController extends GetxController {
+  
   late final Box<Studentmodel> studentBox;
+
   final RxList<Studentmodel> students = <Studentmodel>[].obs;
 
   @override
@@ -13,7 +15,6 @@ class HomeController extends GetxController {
     studentBox = Hive.box<Studentmodel>('student_db');
     getStudents();
   }
-
   
   void getStudents() {
     students.assignAll(studentBox.values.toList());

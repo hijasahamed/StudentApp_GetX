@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:student_app_getx/db/functions/home_controller.dart';
 import 'package:student_app_getx/db/model/model.dart';
+import 'package:student_app_getx/screens/edit_student/edit_student.dart';
 import 'package:student_app_getx/screens/list_student/personal_details.dart';
 
-class ListStudent extends StatelessWidget {
-  ListStudent({super.key,});
+final HomeController homeController = Get.put(HomeController()); 
 
-  final HomeController homeController = Get.put(HomeController()); 
+class ListStudent extends StatelessWidget {
+  const ListStudent({super.key,});
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +60,12 @@ class ListStudent extends StatelessWidget {
                                           backgroundImage: FileImage(File(student.image)),
                                         ),
                                         IconButton(onPressed: (){
-                                          
+                                          Get.to( EditStudentScreen(student: student,));
                                         }, 
                                         icon: const Icon(Icons.edit,color: Colors.green,)
                                         ),
                                         IconButton(onPressed: (){
-                                          onDelete(student);
+                                          onDelete(student,false);
                                         }, 
                                         icon: const Icon(Icons.delete,color: Colors.red,)
                                         ),
@@ -98,8 +100,10 @@ class ListStudent extends StatelessWidget {
       ),
     );
   }
+}
 
-  void onDelete(Studentmodel student){
+
+  void onDelete(Studentmodel student, bool back){
     Get.defaultDialog(
       title: 'Confirm Deletion',
       titleStyle: const TextStyle(fontWeight: FontWeight.bold),
@@ -112,6 +116,9 @@ class ListStudent extends StatelessWidget {
       onConfirm: () {
         homeController.delete(student);
         Get.back();
+        if(back==true){
+          Get.back();
+        }
         Get.snackbar(
           'Deleted',
           'Student details removed',
@@ -123,5 +130,3 @@ class ListStudent extends StatelessWidget {
       onCancel: () => Get.back(),
     );
   }
-
-}
