@@ -7,7 +7,7 @@ class HomeController extends GetxController {
   
   late final Box<Studentmodel> studentBox;
 
-  final RxList<Studentmodel> students = <Studentmodel>[].obs;
+  final RxList<Studentmodel> students = <Studentmodel>[].obs;  
 
   @override
   void onInit() {

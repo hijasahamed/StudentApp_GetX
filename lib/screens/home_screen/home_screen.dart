@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:student_app_getx/screens/add_student/add_student.dart';
 import 'package:student_app_getx/screens/list_student/list_student.dart';
+import 'package:student_app_getx/screens/search.dart/search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -50,7 +51,9 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showSearch(context: context, delegate: Search());
+              },
               icon: const Icon(
                 Icons.search,
                 size: 33,
