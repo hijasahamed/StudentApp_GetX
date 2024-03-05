@@ -211,7 +211,7 @@ class TextFormFieldWidget extends StatelessWidget {
         ..address = addresscontroller.text.trim()
         ..mobile = mobilecontroller.text.trim()
         ..image = imagecontroller.selectedImage.value!.path;
-      addStudentToDb(value);
+      homeController.addStudentToDb(value);
       Get.back();
     } else if (imagecontroller.selectedImage.value == null &&
         !formkey.currentState!.validate()) {
@@ -223,12 +223,5 @@ class TextFormFieldWidget extends StatelessWidget {
     }
   }
 
-  Future<void> addStudentToDb(Studentmodel value) async {
-    final studentDB = Hive.box<Studentmodel>('student_db');
-    await studentDB.add(value);
-    Get.snackbar('Success', 'Student detials saved Successfully',
-        backgroundColor: Colors.green,
-        duration: const Duration(seconds: 2),
-        dismissDirection: DismissDirection.horizontal);
-  }
+  
 }

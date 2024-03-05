@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:student_app_getx/db/model/model.dart';
+import 'package:student_app_getx/screens/edit_student/edit_student.dart';
 import 'package:student_app_getx/screens/list_student/list_student.dart';
 
 class Details extends StatelessWidget {
@@ -41,7 +43,7 @@ class Details extends StatelessWidget {
                                   backgroundImage: FileImage(File(student.image)), 
                                 ),
                                 IconButton(onPressed: (){
-                                                              
+                                    Get.to(EditStudentScreen(student: student));                         
                                   }, icon: const Icon(Icons.edit,color: Colors.green,)
                                 ),
                                 IconButton(onPressed: (){

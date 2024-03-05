@@ -1,12 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:student_app_getx/db/functions/home_controller.dart';
 import 'package:student_app_getx/db/functions/image_picker.dart';
 import 'package:student_app_getx/db/model/model.dart';
+import 'package:student_app_getx/screens/home_screen/home_screen.dart';
+import 'package:student_app_getx/screens/list_student/list_student.dart';
 
 class EditStudentScreen extends StatelessWidget {
-  EditStudentScreen({super.key, required this.student,});
+  EditStudentScreen({
+    super.key,
+    required this.student,
+  });
 
   final Studentmodel student;
   final HomeController controller = Get.find<HomeController>();
@@ -15,15 +22,19 @@ class EditStudentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    TextEditingController nameController =TextEditingController(text: student.name);
-    TextEditingController ageController =TextEditingController(text: student.age);
-    TextEditingController addressController =TextEditingController(text: student.address);
-    TextEditingController mobileController =TextEditingController(text: student.mobile);
+    TextEditingController nameController =
+        TextEditingController(text: student.name);
+    TextEditingController ageController =
+        TextEditingController(text: student.age);
+    TextEditingController addressController =
+        TextEditingController(text: student.address);
+    TextEditingController mobileController =
+        TextEditingController(text: student.mobile);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Student'),
+        backgroundColor: Colors.green.shade900,
       ),
       body: SafeArea(
           child: SingleChildScrollView(
@@ -56,11 +67,10 @@ class EditStudentScreen extends StatelessWidget {
                                             fit: BoxFit.cover,
                                           ),
                                         )
-                                      : const CircleAvatar(
+                                      : CircleAvatar(
                                           radius: 30,
-                                          backgroundImage: AssetImage(
-                                                  'images/circle avatar.png')
-                                              as ImageProvider,
+                                          backgroundImage:
+                                              FileImage(File(student.image)),
                                         ));
                             }),
                             Positioned(
@@ -159,8 +169,21 @@ class EditStudentScreen extends StatelessWidget {
                       minimumSize: const Size(360, 45),
                       backgroundColor: Colors.green.shade900,
                     ),
-                    onPressed: () {
-                     
+                    onPressed: ()async {
+                      await checkImage(imagecontroller,student);
+                      homeController.updateStudent(
+                          student,
+                          nameController.text,
+                          ageController.text,
+                          addressController.text,
+                          mobileController.text,
+                          imagecontroller);
+                      Get.offAll(const HomeScreen());    
+                      Get.snackbar(
+                          'Success', 'Student detials updated Successfully',
+                          backgroundColor: Colors.green,
+                          duration: const Duration(seconds: 2),
+                          dismissDirection: DismissDirection.horizontal);                      
                     },
                     icon: const Icon(
                       Icons.check,
@@ -172,13 +195,16 @@ class EditStudentScreen extends StatelessWidget {
                           fontSize: 16,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
-                    )
-                 ),
+                    )),
               ],
             ),
           ),
         ),
       )),
     );
+  }
+
+  checkImage(ic,std){
+    ic.selectedImage.value ??= File(std.image);
   }
 }

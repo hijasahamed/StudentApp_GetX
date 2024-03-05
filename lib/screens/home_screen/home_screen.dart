@@ -61,39 +61,39 @@ class HomeScreen extends StatelessWidget {
               ))
         ],
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: size.height * .77,
-              width: size.width,
-              child: const Padding(
+      body: Column(
+        children: [
+           const Expanded(
+            flex: 10,
+            child:  SizedBox(             
+              child: Padding(
                   padding: EdgeInsets.all(5), child: ListStudent()),
             ),
-            Flexible(
-              child: SizedBox(
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(
-                      Colors.green.shade900,
-                    )),
-                    onPressed: () {
-                      Get.to(
-                        () => AddStudent(),
-                        transition: Transition.cupertinoDialog,
-                      );
-                    },
-                    child: const Text(
-                      'Add Student',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    )),
-              ),
-            )
-          ],
-        ),
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(
+                    Colors.green.shade900,
+                  )),
+                  onPressed: () {
+                    Get.to(
+                      () => AddStudent(),
+                      transition: Transition.cupertinoDialog,
+                    );
+                  },
+                  child: const Text(
+                    'Add Student',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
+                  )),
+            ),
+          )
+        ],
       ),
     );
   }
