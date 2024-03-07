@@ -42,56 +42,56 @@ class ListStudent extends StatelessWidget {
                   onTap: () {
                     Get.to(Details(student: student,),transition: Transition.zoom);
                   },
-                  child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Color.fromARGB(255, 59, 88, 61)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 30,
-                                          backgroundImage: FileImage(File(student.image)),
-                                        ),
-                                        IconButton(onPressed: (){
-                                          Get.to( EditStudentScreen(student: student,));
-                                        }, 
-                                        icon: const Icon(Icons.edit,color: Colors.white,)
-                                        ),
-                                        IconButton(onPressed: (){
-                                          onDelete(student,false);
-                                        }, 
-                                        icon: const Icon(Icons.delete,color: Colors.white,)
-                                        ),
-                                      ],
+                  child: Card(
+                    elevation: 10,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 30,
+                                      backgroundImage: FileImage(File(student.image)),
                                     ),
-                                  ),
+                                    IconButton(onPressed: (){
+                                      Get.to( EditStudentScreen(student: student,));
+                                    }, 
+                                    icon: const Icon(Icons.edit,color: Colors.white,)
+                                    ),
+                                    IconButton(onPressed: (){
+                                      onDelete(student,false);
+                                    }, 
+                                    icon: const Icon(Icons.delete,color: Colors.white,)
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Name:${student.name.toUpperCase()}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
-                                        Text('Age:${student.age}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
-                                        Text('Address:${student.address.toUpperCase()}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
-                                        Text('Mobile:+91 ${student.mobile}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),  
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
+                              ),
                             ),
-                          ),
+                            SizedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Name:${student.name.toUpperCase()}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
+                                    Text('Age:${student.age}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
+                                    Text('Address:${student.address.toUpperCase()}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
+                                    Text('Mobile:+91 ${student.mobile}',style:const TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),  
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
+                    ),
+                  ),
                 );
               }
             );

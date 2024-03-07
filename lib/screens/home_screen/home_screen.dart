@@ -62,12 +62,10 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const Expanded(
+           const Expanded(
             flex: 9, 
-            child:  SizedBox(             
-              child: Padding(
-                  padding: EdgeInsets.all(5), child: ListStudent()),
-            ),
+            child: Padding(
+                padding: EdgeInsets.all(5), child: ListStudent()),
           ),
           Expanded(
             flex: 1,

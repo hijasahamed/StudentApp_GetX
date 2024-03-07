@@ -3,7 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:student_app_getx/db/functions/home_controller.dart';
+import 'package:student_app_getx/screens/edit_student/edit_student.dart';
+import 'package:student_app_getx/screens/list_student/list_student.dart';
 import 'package:student_app_getx/screens/list_student/personal_details.dart';
+
+final HomeController homeController = Get.put(HomeController()); 
 
 class Search extends SearchDelegate {
   List data = [];
@@ -42,7 +46,13 @@ class Search extends SearchDelegate {
           final filtered = filtered1
               .where((element) =>
                   element.name.toLowerCase().contains(query.toLowerCase()))
-              .toList();         
+              .toList();
+          if(filtered.isEmpty) {
+            return const Center(
+              child: Text('No searched results',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+            );
+          }
           if (controller.students.isNotEmpty) {
             return ListView.builder(
               itemBuilder: (ctx, index) {
@@ -50,7 +60,8 @@ class Search extends SearchDelegate {
                 String nameval = data.name;
                 if ((nameval).contains(query)) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 10,right: 10,top: 15),
+                    padding:
+                        const EdgeInsets.only(left: 10, right: 10, top: 15),
                     child: Column(
                       children: [
                         Card(
@@ -63,15 +74,45 @@ class Search extends SearchDelegate {
                             leading: CircleAvatar(
                               backgroundImage: FileImage(File(data.image)),
                             ),
-                            trailing: IconButton(
-                              onPressed: (){
-                          
-                              }, 
-                              icon: const Icon(Icons.more_vert)
-                            )
+                            trailing: PopupMenuButton<int>(
+                              itemBuilder: (BuildContext context) => [
+                                const PopupMenuItem(
+                                  value: 1,
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.edit),
+                                      SizedBox(width: 4,),
+                                      Text('Edit')
+                                    ],
+                                  )
+                                ),
+                                const PopupMenuItem(
+                                  value: 2,
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.delete),
+                                      SizedBox(width: 5,),
+                                      Text('Delete')
+                                    ],
+                                  )
+                                ),
+                              ],
+                              onSelected: (value) {
+                                switch (value) {
+                                  case 1:
+                                  Get.to(EditStudentScreen(student: data));                                   
+                                    break;
+                                  case 2:
+                                  onDelete(data,true);
+                                    break;
+                                  default:
+                                }
+                              },
+                              icon: const Icon(Icons.more_vert),
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 8,),
+                        const SizedBox(height: 8),
                       ],
                     ),
                   );
@@ -102,14 +143,10 @@ class Search extends SearchDelegate {
               .where((element) =>
                   element.name.toLowerCase().contains(query.toLowerCase()))
               .toList();
-          if (query.isEmpty) {
+          if(filtered.isEmpty) {
             return const Center(
-              child: Text('Please search for results',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold)),
-            );
-          } 
-          else if (filtered.isEmpty) {
-            return const Center(
-              child: Text('No searched results',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold)),
+              child: Text('No searched results',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
             );
           }
           if (controller.students.isNotEmpty) {
@@ -117,23 +154,67 @@ class Search extends SearchDelegate {
               itemBuilder: (ctx, index) {
                 final data = filtered[index];
                 String nameval = data.name;
-                if ((nameval).contains((query.trim()))) {
-                  return Column(
-                    children: [
-                      ListTile(
-                        onTap: () {
-                          Get.to(Details(student: data));
-                        },
-                        title: Text(data.name),
-                        leading: CircleAvatar(
-                          backgroundImage: FileImage(File(data.image)),
+                if ((nameval).contains(query)) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.only(left: 10, right: 10, top: 15),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 5,
+                          child: ListTile(
+                            onTap: () {
+                              Get.to(Details(student: data));
+                            },
+                            title: Text(data.name),
+                            leading: CircleAvatar(
+                              backgroundImage: FileImage(File(data.image)),
+                            ),
+                            trailing: PopupMenuButton<int>(
+                              itemBuilder: (BuildContext context) => [
+                                const PopupMenuItem(
+                                  value: 1,
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.edit),
+                                      SizedBox(width: 4,),
+                                      Text('Edit')
+                                    ],
+                                  )
+                                ),
+                                const PopupMenuItem(
+                                  value: 2,
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.delete),
+                                      SizedBox(width: 5,),
+                                      Text('Delete')
+                                    ],
+                                  )
+                                ),
+                              ],
+                              onSelected: (value) {
+                                switch (value) {
+                                  case 1:
+                                  Get.to(EditStudentScreen(student: data));                                   
+                                    break;
+                                  case 2:
+                                  onDelete(data,true);
+                                    break;
+                                  default:
+                                }
+                              },
+                              icon: const Icon(Icons.more_vert),
+                            ),
+                          ),
                         ),
-                      ),
-                      const Divider(),
-                    ],
+                        const SizedBox(height: 8),
+                      ],
+                    ),
                   );
-                } else {}
-                return null;
+                } else {
+                  return Container();
+                }
               },
               itemCount: filtered.length,
             );
