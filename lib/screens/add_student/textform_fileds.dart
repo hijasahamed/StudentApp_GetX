@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:student_app_getx/db/functions/home_controller.dart';
 import 'package:student_app_getx/db/functions/image_picker.dart';
 import 'package:student_app_getx/db/model/model.dart';

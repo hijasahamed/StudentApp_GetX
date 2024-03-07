@@ -42,36 +42,38 @@ class Search extends SearchDelegate {
           final filtered = filtered1
               .where((element) =>
                   element.name.toLowerCase().contains(query.toLowerCase()))
-              .toList();   
-          if (query.isEmpty) {
-            return const Center(
-              child: Text('Please search for results',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
-            );
-          } 
-          else if (filtered.isEmpty) {
-            return const Center(
-              child: Text('No searched results',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold)),
-            );
-          }
+              .toList();         
           if (controller.students.isNotEmpty) {
             return ListView.builder(
               itemBuilder: (ctx, index) {
                 final data = filtered[index];
                 String nameval = data.name;
                 if ((nameval).contains(query)) {
-                  return Column(
-                    children: [
-                      ListTile(
-                        onTap: () {
-                          Get.to(Details(student: data));
-                        },
-                        title: Text(data.name),
-                        leading: CircleAvatar(
-                          backgroundImage: FileImage(File(data.image)),
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 10,right: 10,top: 15),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 5,
+                          child: ListTile(
+                            onTap: () {
+                              Get.to(Details(student: data));
+                            },
+                            title: Text(data.name),
+                            leading: CircleAvatar(
+                              backgroundImage: FileImage(File(data.image)),
+                            ),
+                            trailing: IconButton(
+                              onPressed: (){
+                          
+                              }, 
+                              icon: const Icon(Icons.more_vert)
+                            )
+                          ),
                         ),
-                      ),
-                      const Divider(),
-                    ],
+                        const SizedBox(height: 8,),
+                      ],
+                    ),
                   );
                 } else {
                   return Container();

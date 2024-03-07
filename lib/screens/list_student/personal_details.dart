@@ -14,7 +14,7 @@ class Details extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        title: const Text('STUDENT  INFORMATION',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 19),),
+        title:  Text(student.name.toUpperCase(),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 22),),
         backgroundColor: Colors.green.shade900,      
       ),
       body: SafeArea(
@@ -25,7 +25,7 @@ class Details extends StatelessWidget {
             width: double.infinity,
             child:  Column(
               children: [
-                Text(student.name.toUpperCase(),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 25,),),
+                const SizedBox(height: 25,),
                  Card(
                   color: const Color.fromARGB(255, 59, 88, 61),
                   elevation: 10,              
@@ -44,11 +44,11 @@ class Details extends StatelessWidget {
                                 ),
                                 IconButton(onPressed: (){
                                     Get.to(EditStudentScreen(student: student));                         
-                                  }, icon: const Icon(Icons.edit,color: Colors.green,)
+                                  }, icon: const Icon(Icons.edit,color: Colors.white,)
                                 ),
                                 IconButton(onPressed: (){
                                     onDelete(student,true);                         
-                                  }, icon: const Icon(Icons.delete,color: Colors.red,)
+                                  }, icon: const Icon(Icons.delete,color: Colors.white,)
                                 ),
                              ],
                            ),

@@ -62,12 +62,12 @@ class ListStudent extends StatelessWidget {
                                         IconButton(onPressed: (){
                                           Get.to( EditStudentScreen(student: student,));
                                         }, 
-                                        icon: const Icon(Icons.edit,color: Colors.green,)
+                                        icon: const Icon(Icons.edit,color: Colors.white,)
                                         ),
                                         IconButton(onPressed: (){
                                           onDelete(student,false);
                                         }, 
-                                        icon: const Icon(Icons.delete,color: Colors.red,)
+                                        icon: const Icon(Icons.delete,color: Colors.white,)
                                         ),
                                       ],
                                     ),

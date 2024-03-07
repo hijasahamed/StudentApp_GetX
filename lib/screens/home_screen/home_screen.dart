@@ -9,7 +9,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green.shade900,
@@ -63,34 +62,36 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-           const Expanded(
-            flex: 10,
+          const Expanded(
+            flex: 9, 
             child:  SizedBox(             
               child: Padding(
                   padding: EdgeInsets.all(5), child: ListStudent()),
             ),
           ),
           Expanded(
-            flex: 2,
-            child: SizedBox(
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                    Colors.green.shade900,
-                  )),
-                  onPressed: () {
-                    Get.to(
-                      () => AddStudent(),
-                      transition: Transition.cupertinoDialog,
-                    );
-                  },
-                  child: const Text(
-                    'Add Student',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  )),
+            flex: 1,
+            child: Center(
+              child: SizedBox(
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(
+                      Colors.green.shade900,
+                    )),
+                    onPressed: () {
+                      Get.to(
+                        () => AddStudent(),
+                        transition: Transition.cupertinoDialog,
+                      );
+                    },
+                    child: const Text(
+                      'Add Student',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+              ),
             ),
           )
         ],
