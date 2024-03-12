@@ -9,7 +9,7 @@ Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(StudentmodelAdapter());
-  await Hive.openBox<Studentmodel>('student_db');
+  await Hive.openBox<Studentmodel>('student_db'); 
   runApp(const MyApp());
 }
 

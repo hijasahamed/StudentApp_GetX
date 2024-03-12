@@ -7,7 +7,6 @@ import 'package:student_app_getx/screens/edit_student/edit_student.dart';
 import 'package:student_app_getx/screens/list_student/list_student.dart';
 import 'package:student_app_getx/screens/list_student/personal_details.dart';
 
-final HomeController homeController = Get.put(HomeController()); 
 
 class Search extends SearchDelegate {
   List data = [];
@@ -229,3 +228,5 @@ class Search extends SearchDelegate {
         });
   }
 }
+
+
